@@ -18,7 +18,7 @@ from datetime import datetime, timezone
 GV = os.environ.get("GRAPH_VERSION", "v26.0")
 API = f"https://graph.facebook.com/{GV}"
 TOKEN = os.environ.get("META_PAGE_TOKEN", "")
-PAGE = os.environ.get("FB_PAGE_ID") or "61595919502608"
+PAGE = os.environ.get("FB_PAGE_ID") or ""
 REPO = os.environ.get("GITHUB_REPOSITORY", "mdduszak-stack/geomo-social")
 SHA = os.environ.get("GITHUB_SHA", "main")
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -104,13 +104,18 @@ def main():
     if not TOKEN:
         print("META_PAGE_TOKEN not set yet - nothing to do.")
         return
-    # Accept a user token too: swap it for the Page token (works for page tokens as well).
+    global PAGE
+    # Accept a user token: find the Geomo page in me/accounts and use its Page token.
     try:
-        pt = call("GET", PAGE, fields="access_token").get("access_token")
-        if pt:
-            TOKEN = pt
+        accs = call("GET", "me/accounts", fields="id,name,access_token").get("data", [])
+        log("pages visible to token:", ", ".join(f"{a['name']} ({a['id']})" for a in accs) or "none")
+        page = next((a for a in accs if (PAGE and a["id"] == PAGE) or (not PAGE and a["name"].strip().lower() == "geomo")), None)
+        if page:
+            PAGE, TOKEN = page["id"], page["access_token"]
     except Exception as e:
-        log("could not read page token, using the given token as is:", str(e)[:200])
+        log("me/accounts not available (probably already a Page token):", str(e)[:200])
+    if not PAGE:
+        PAGE = call("GET", "me", fields="id")["id"]
     queue = json.load(open(os.path.join(ROOT, "queue.json")))
     state = json.load(open(STATE)) if os.path.exists(STATE) else {}
     if len(sys.argv) > 2 and sys.argv[1] == "--check":
