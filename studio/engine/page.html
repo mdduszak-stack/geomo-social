@@ -1,0 +1,24 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="tokens.css"><link rel="stylesheet" href="bundle.css">
+<style>body{margin:0;background:#ccc}body.anim{overflow:hidden}.hidezones .gs-zone{visibility:hidden}.slot{display:block;width:max-content;margin:0 0 40px}</style>
+<script src="react.production.min.js"></script><script src="react-dom.production.min.js"></script><script src="bundle.js"></script>
+<script src="core.js"></script><script src="motion.js"></script>
+</head><body><div id="root"></div>
+<script>
+// page.html#CODE        -> all slides of a post (static PNG capture)
+// page.html#CODE/IDX    -> one slide, for motion capture (MP4)
+(function(){
+  var hp=(location.hash||'#P01').slice(1).split('/'), code=hp[0], idx=hp.length>1?+hp[1]:null;
+  function render(){
+    var set=SETS[code]; if(!set){document.body.textContent='Unknown post '+code; window.__ready=true; return;}
+    if(code==='st') document.body.className='hidezones';
+    var root=ReactDOM.createRoot(document.getElementById('root'));
+    if(idx===null) root.render(h(F,null,set.map(function(s,i){return h('div',{key:i,className:'slot',id:'s'+(i+1)},s);})));
+    else { document.body.classList.add('anim'); root.render(h('div',{className:'slot',id:'s1'},set[idx])); }
+    setTimeout(function(){window.__ready=true;},50);
+  }
+  if(SETS[code]) return render();
+  var sc=document.createElement('script'); sc.src='../posts/'+code+'.js'; sc.onload=render; sc.onerror=render; document.head.appendChild(sc);
+})();
+</script></body></html>
