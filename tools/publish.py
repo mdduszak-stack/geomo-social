@@ -15,7 +15,7 @@ Usage: publish.py            -> publish what is due
 import json, os, sys, time, urllib.parse, urllib.request, urllib.error
 from datetime import datetime, timezone
 
-GV = os.environ.get("GRAPH_VERSION", "v23.0")
+GV = os.environ.get("GRAPH_VERSION", "v26.0")
 API = f"https://graph.facebook.com/{GV}"
 TOKEN = os.environ.get("META_PAGE_TOKEN", "")
 PAGE = os.environ.get("FB_PAGE_ID") or "61595919502608"
