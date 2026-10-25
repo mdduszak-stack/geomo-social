@@ -45,7 +45,11 @@ def call(method, endpoint, **params):
 
 
 def log(*a):
-    print(datetime.now(timezone.utc).strftime("%H:%M:%SZ"), *a, flush=True)
+    msg = " ".join(str(x) for x in a)
+    print(datetime.now(timezone.utc).strftime("%H:%M:%SZ"), msg, flush=True)
+    if os.environ.get("GITHUB_ACTIONS"):
+        kind = "error" if "ERROR" in msg else "notice"
+        print(f"::{kind}::{msg[:900]}", flush=True)
 
 
 def wait_ready(cid, label, timeout=900):
@@ -152,4 +156,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        log("ERROR", str(e))
+        sys.exit(1)
