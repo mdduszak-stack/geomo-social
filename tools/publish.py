@@ -96,9 +96,17 @@ def fb_publish(post):
 
 
 def main():
+    global TOKEN
     if not TOKEN:
         print("META_PAGE_TOKEN not set yet - nothing to do.")
         return
+    # Accept a user token too: swap it for the Page token (works for page tokens as well).
+    try:
+        pt = call("GET", PAGE, fields="access_token").get("access_token")
+        if pt:
+            TOKEN = pt
+    except Exception as e:
+        log("could not read page token, using the given token as is:", str(e)[:200])
     queue = json.load(open(os.path.join(ROOT, "queue.json")))
     state = json.load(open(STATE)) if os.path.exists(STATE) else {}
     if len(sys.argv) > 2 and sys.argv[1] == "--check":
