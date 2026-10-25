@@ -1,0 +1,38 @@
+name: Publish due posts
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+    inputs:
+      check:
+        description: "Dry run for one post code (e.g. P05). Leave empty to publish what is due."
+        required: false
+        default: ""
+permissions:
+  contents: write
+concurrency:
+  group: publish
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish
+        env:
+          META_PAGE_TOKEN: ${{ secrets.META_PAGE_TOKEN }}
+          FB_PAGE_ID: ${{ vars.FB_PAGE_ID }}
+        run: |
+          if [ -n "${{ github.event.inputs.check }}" ]; then
+            python3 tools/publish.py --check "${{ github.event.inputs.check }}"
+          else
+            python3 tools/publish.py
+          fi
+      - name: Save state
+        if: always() && github.event.inputs.check == ''
+        run: |
+          git config user.name "geomo-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add state/published.json
+          git diff --cached --quiet || (git commit -m "Update published state" && git push)
