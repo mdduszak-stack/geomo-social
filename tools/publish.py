@@ -75,7 +75,11 @@ def ig_prepare(ig, post):
     spec = post["ig"]
     media = [url_for(p) for p in spec["media"]]
     if spec.get("type") == "reel":
-        c = call("POST", f"{ig}/media", media_type="REELS", video_url=media[0], caption=spec["caption"], share_to_feed="true")["id"]
+        extra = {}
+        if spec.get("audio"):   # licensed track from the Instagram Audio API (ig_audio), mixed over the video
+            a = spec["audio"]
+            extra["audio_configuration"] = json.dumps({"audio_id": str(a["id"]), "audio_volume": a.get("audio_volume", 60), "video_volume": a.get("video_volume", 100)})
+        c = call("POST", f"{ig}/media", media_type="REELS", video_url=media[0], caption=spec["caption"], share_to_feed="true", **extra)["id"]
         wait_ready(c, "reel")
         return c
     kids = []
@@ -120,6 +124,16 @@ def main():
     state = json.load(open(STATE)) if os.path.exists(STATE) else {}
     if len(sys.argv) > 2 and sys.argv[1] == "--check":
         code = sys.argv[2]
+        if code.startswith("audio"):   # check=audio or audio:<search>: list music usable via the API
+            ig = ig_user(); qy = code.split(":", 1)[1] if ":" in code else ""
+            params = dict(audio_type="music", user_id=ig)
+            if qy: params["search_query"] = qy
+            r = call("GET", "ig_audio", **params)
+            items = r.get("data", [])
+            log(f"AUDIO '{qy or 'trending'}': {len(items)} tracks | " + " | ".join(
+                f"{x.get('id')}: {x.get('title')} - {x.get('display_artist') or x.get('artist')} ({x.get('duration_in_ms') or x.get('duration')})" for x in items[:25]))
+            if items: log("first item fields: " + ",".join(items[0].keys()))
+            return
         me = call("GET", PAGE, fields="name")
         ig = ig_user()
         log(f"page OK: {me.get('name')} · IG account {ig}")
