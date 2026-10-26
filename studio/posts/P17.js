@@ -8,7 +8,7 @@
 (function () {
   var CODE = 'P17';
   var INK = 'var(--s-fg)';
-  var big = function (t, strike, cls) { return h('div', { className: cls, style: Object.assign(DISP(800, 320, 72), { color: 'var(--s-fg)', lineHeight: 1, position: 'relative', display: 'inline-block' }) }, t,
+  var big = function (t, strike, cls, size) { return h('div', { className: cls, style: Object.assign(DISP(800, size || 320, 72), { color: 'var(--s-fg)', lineHeight: 1, position: 'relative', display: 'inline-block' }) }, t,
     strike ? h('span', { className: 'p17-strike', style: { position: 'absolute', left: -10, right: -10, top: '52%', height: 22, background: 'var(--measure-on-dark)', transformOrigin: 'left center' } }) : null); };
   var fitCol = function (v) { return v >= 85 ? 'var(--ig-good)' : v >= 75 ? 'var(--ig-mid, #C98A00)' : 'var(--ig-bad, #C0392B)'; };
   function bars(rows) {
@@ -24,9 +24,13 @@
 
   SETS[CODE] = [
     h(G.Slide, { key: 1, format: 'reel', tone: 'navy', footer: false },
-      h('div', { className: 'gs-stack' }, h(G.Kicker, null, 'Black Friday'), big('−30%', false, 'p17-big'), h('div', { style: { marginTop: 30 } }, h(G.Hook, { size: 104 }, 'Great deal?')))),
+      h('div', { className: 'gs-stack' }, h(G.Kicker, null, 'Black Friday'),
+        h('div', { style: { display: 'grid', gap: 0 } }, ['−30%', '−40%', '−50%'].map(function (t) { return h('div', { key: t }, big(t, false, 'p17-big', 250)); })),
+        h('div', { style: { marginTop: 30 } }, h(G.Hook, { size: 104 }, 'Great deal?')))),
     h(G.Slide, { key: 2, format: 'reel', tone: 'navy', footer: false },
-      h('div', { className: 'gs-stack' }, h(G.Kicker, null, 'Black Friday'), big('−30%', true, 'p17-big'), h('div', { className: 'p17-no', style: { marginTop: 30 } }, h(G.Hook, { size: 104 }, 'Not if it’s\nthe wrong size.')))),
+      h('div', { className: 'gs-stack' }, h(G.Kicker, null, 'Black Friday'),
+        h('div', { style: { display: 'grid', gap: 0 } }, ['−30%', '−40%', '−50%'].map(function (t) { return h('div', { key: t }, big(t, true, 'p17-big', 250)); })),
+        h('div', { className: 'p17-no', style: { marginTop: 30 } }, h(G.Hook, { size: 104 }, 'Not if it’s\nthe wrong size.')))),
     h(G.Slide, { key: 3, format: 'reel', tone: 'paper', footer: false },
       h('div', { className: 'gs-stack' }, h(G.Kicker, null, 'Canyon Grail Gen 3 · rider 178 cm'), h(G.Hook, { size: 104 }, 'Only size L\n*left on sale?*')),
       h('div', { style: { marginTop: 80 } }, bars([['S', 93], ['M', 96], ['L', 61, true]])),
@@ -46,8 +50,8 @@
 
   function barsIn(r, t) { M.qa(r, '.p17-row').forEach(function (row, i) { var tt = t + i * 450; M.fadeUp(row, tt, 700); M.grow(M.q(row, '.p17-fill'), tt + 150, 1100); M.count(M.q(row, '.p17-num'), tt + 150, 1100); }); }
   CHOREO[CODE] = [
-    function (r) { var b = M.q(r, '.p17-big'); b.style.transformOrigin = 'left center'; M.add(b, [{ opacity: 0, transform: 'scale(.6)' }, { opacity: 1, transform: 'scale(1)' }], 200, 900); M.fadeUp(M.q(r, '.gs-hook'), 1100, 800); return 2600; },
-    function (r) { M.grow(M.q(r, '.p17-strike'), 300, 600); M.fadeUp(M.q(r, '.p17-no'), 900, 800); return 2800; },
+    function (r) { M.qa(r, '.p17-big').forEach(function (b, i) { b.style.transformOrigin = 'left center'; M.add(b, [{ opacity: 0, transform: 'scale(.6)' }, { opacity: 1, transform: 'scale(1)' }], 200 + i * 550, 800); }); M.fadeUp(M.q(r, '.gs-hook'), 2000, 800); return 3600; },
+    function (r) { M.qa(r, '.p17-strike').forEach(function (x, i) { M.grow(x, 300 + i * 250, 500); }); M.fadeUp(M.q(r, '.p17-no'), 1200, 800); return 3200; },
     function (r) { barsIn(r, 500); M.caption(r, 2400); return 5600; },
     function (r) { barsIn(r, 400); M.fadeUp(M.q(r, '.p17-fact'), 1500, 900); return 5000; },
     function (r) { M.fadeUp(M.q(r, '.p17-fact'), 900, 900); return 3600; },
