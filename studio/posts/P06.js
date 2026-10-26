@@ -35,15 +35,14 @@
   function mix(a, b, u) { var o = {}; for (var k in a) o[k] = a[k] + (b[k] - a[k]) * u; return o; }
   function ease(u) { u = Math.max(0, Math.min(1, u)); return u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2; }
   var BEND0 = { foot: -100, shin: 0, thigh: 0, torso: 0, neck: 0, ua: 180, fa: 180 };
-  var BEND1 = { foot: -100, shin: 10, thigh: 10, torso: -120, neck: -160, ua: 185, fa: 185 };
+  var BEND1 = { foot: -100, shin: 10, thigh: 10, torso: -113, neck: -150, ua: 185, fa: 185 };   // straight arms just reach the floor
   var PRONE = { foot: 135, shin: -90, thigh: -90, torso: -59, neck: -65, ua: 180, fa: -90 };
   var PLANK = { foot: 135, shin: -78.3, thigh: -78.3, torso: -78.3, neck: -78, ua: 180, fa: -90 };
   // bike for the neck test: scale 0.15 px/mm (wheel r 350 mm, wheelbase ~1030 mm, crank 172 mm)
-  var BK = { R: [120, 234], F: [275, 234], BB: [184, 244], ST: [160, 165], HT: [246, 158], HB: [253, 178], hip: [154.6, 138.5], hand: [258, 154], crank: 26 };
+  var BK = { R: [120, 234], F: [275, 234], BB: [184, 244], ST: [160, 165], HT: [246, 158], HB: [253, 178], hip: [154.6, 138.5], hand: [264, 160], crank: 26 };
   var POSE = {
     bend: function (u) {   // hands stop at the floor: the elbows give a little instead of going through it
       var j = chain([232, 260], mix(BEND0, BEND1, ease(u)));
-      if (j.hand[1] > 264) { var tg = [j.hand[0] + (j.hand[1] - 264) * 0.6, 264]; j.elb = ik(j.sh, tg, L.ua, L.fa, function (a, b) { return a[0] < b[0] ? a : b; }); j.hand = tg; }
       return j;
     },
     plank: function (u) { return chain([340, 258], mix(PRONE, PLANK, ease(u))); },
@@ -51,7 +50,7 @@
       var th = (T / 1700) * 2 * Math.PI + 0.6, P = [BK.BB[0] + BK.crank * Math.cos(th), BK.BB[1] + BK.crank * Math.sin(th)];
       var ank = [P[0] - 4, P[1] - 12], toe = [P[0] + 13, P[1] - 1];
       var knee = ik(BK.hip, ank, L.thigh, L.shin, function (a, b) { return a[0] > b[0] ? a : b; });
-      var S = mv(BK.hip, L.torso, 62), elb = ik(S, BK.hand, L.ua, L.fa, function (a, b) { return a[1] > b[1] ? a : b; });
+      var S = mv(BK.hip, L.torso, 55), elb = ik(S, BK.hand, L.ua, L.fa, function (a, b) { return a[1] > b[1] ? a : b; });
       var hu = ease((T - 900) / 1400);
       return { toe: toe, ank: ank, knee: knee, hip: BK.hip, sh: S, elb: elb, hand: BK.hand, head: mv(S, 30, 105 - 55 * hu), pedal: P, hu: hu };
     }
@@ -168,7 +167,7 @@
     h(G.Slide, { key: 7, format: 'reel', tone: 'paper', footer: false },
       h('div', { className: 'gs-stack' }, h(G.Kicker, null, 'All four together'), h(G.Hook, { size: 112 }, 'Same rider.\n*58 mm* apart.')),
       h('div', { className: 'p6-sum', style: { display: 'grid', gap: 40, marginTop: 80 } },
-        [['Typical in all four', '±0', 'the starting point', MUTED], ['Stiff in all four', '+33 mm', 'bars higher', UP], ['Flexible in all four', '−25 mm', 'bars lower', DOWN]].map(function (r, i) {
+        [['Stiff in all four', '+33 mm', 'bars higher', UP], ['Typical in all four', '±0', 'the starting point', MUTED], ['Flexible in all four', '−25 mm', 'bars lower', DOWN]].map(function (r, i) {
           return h('div', { key: i, className: 'p6-sumrow', style: { display: 'grid', gap: 6, borderTop: '3px solid var(--s-line)', paddingTop: 20 } },
             h('span', { style: Object.assign(DISP(650, 44, 85), { color: INK }) }, r[0]),
             h('div', { style: { display: 'flex', alignItems: 'baseline', gap: 20 } },
@@ -181,8 +180,8 @@
     h(G.Slide, { key: 8, format: 'reel', tone: 'paper', footer: false },
       h('div', { className: 'gs-stack' }, h(G.Kicker, null, 'Canyon Grail Gen 3'), h(G.Hook, { size: 108 }, 'Same height.\n*Different size.*'), h('p', { style: Object.assign(DISP(650, 38, 85), { margin: '16px 0 0', color: MUTED, lineHeight: 1.25 }) }, 'Rider: 178 cm, inseam 84 cm, balanced position.\nStiff = answer 1 in all four tests, typical = 3, flexible = 5.')),
       h('div', { style: { display: 'grid', gap: 34, marginTop: 80 } },
-        sizeLine('Typical', 'M · 96%', 'S close behind at 93%', 1),
-        sizeLine('Stiff', 'M · 93%', 'L drops to 76%', 2),
+        sizeLine('Stiff', 'M · 93%', 'L drops to 76%', 1),
+        sizeLine('Typical', 'M · 96%', 'S close behind at 93%', 2),
         sizeLine('Flexible', 'S · 95%', 'M drops to 83%', 3)),
       h('p', { className: 'gs-caption', style: { fontSize: 38, marginTop: 44 } }, 'Fit scores from Geomo (Gravel race, factory stems). The flexible rider gets the bars low enough on the smaller frame.'),
       h('div', { style: { flex: 1 } })),
@@ -224,8 +223,8 @@
     function (r) { figMotion(M.q(r, '.p6-fig'), 300); return 4200; },
     function (r) { M.fadeUp(M.q(r, '.gs-stack p'), 500, 800); M.qa(r, '.p6-cell').forEach(function (c, i) { M.fadeUp(c, 300 + i * 250, 800); figMotion(M.q(c, 'svg'), 300 + i * 250); }); return 6200; },
     testMotion, testMotion, testMotion, testMotion,
-    function (r) { M.qa(r, '.p6-sumrow').forEach(function (row, i) { var t = i === 0 ? 300 : 1500 + (i - 1) * 700; M.fadeUp(row, t, 900); M.count(M.q(row, '.p6-big'), t + 200, 1300); }); M.caption(r, 3200); return 6600; },
-    function (r) { M.qa(r, '.p6-res').forEach(function (row, i) { M.fadeUp(row, 400 + i * 600, 900); M.count(M.q(row, 'b'), 600 + i * 600, 1200); }); M.caption(r, 2600); return 6400; },
+    function (r) { M.qa(r, '.p6-sumrow').forEach(function (row, i) { var t = i === 1 ? 300 : i === 0 ? 1500 : 2200; M.fadeUp(row, t, 900); M.count(M.q(row, '.p6-big'), t + 200, 1300); }); M.caption(r, 3200); return 6600; },
+    function (r) { M.qa(r, '.p6-res').forEach(function (row, i) { var t = i === 1 ? 400 : i === 0 ? 1400 : 2000; M.fadeUp(row, t, 900); M.count(M.q(row, 'b'), t + 200, 1200); }); M.caption(r, 2600); return 6400; },
     function (r) { M.qa(r, '.gs-body > *, .gs-stack > *').forEach(function (x, i) { if (i < 6) M.fadeUp(x, 200 + i * 220, 900); }); return 3800; }
   ];
 })();
