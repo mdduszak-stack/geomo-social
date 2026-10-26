@@ -66,9 +66,9 @@
       note: 'Longer chainstays make the room and keep the rear steady. Tyre sizes from Canyon’s specs.', artFirst: true }),
     h(G.ContentSlide, { key: 5, page: 5, total: total, kicker: '4 · As sold', title: 'Longer stem. Lower bars.',
       art: change([['Stock stem', '70', '80 mm'], ['Bars: height', '635', '627 mm'], ['Bars: reach', '470', '477 mm']]),
-      note: 'Bars for a 178 cm rider (inseam 84 cm, typical flexibility), factory stem. Fit: Gen 2 M 95%, Gen 3 M 96%.', artFirst: true }),
+      note: 'Bars and fit for a 178 cm rider: inseam 84 cm, typical flexibility, balanced position, factory stem. Fit: Gen 2 M 95%, Gen 3 M 96%.', artFirst: true }),
     h(G.ContentSlide, { key: 6, page: 6, total: total, kicker: '5 · Vs rivals', title: 'Against other gravel racers.',
-      art: rivals(), note: 'Best size for the same 178 cm rider in each bike. Colnago stem estimated (not published). All from Geomo.', artFirst: true }),
+      art: rivals(), note: 'Best size in each bike for one rider: 178 cm, inseam 84 cm, typical flexibility, balanced position. Colnago stem estimated (not published).', artFirst: true }),
     h(G.ContentSlide, { key: 7, page: 7, total: total, kicker: '6 · Who it suits', title: 'Read the numbers, not the hype.',
       art: proscons(), note: 'Neither generation is better. It depends on how you like to sit and ride.', artFirst: true }),
     h(G.CTASlide, { key: 8, page: 8, total: total, title: 'Check how the new Grail fits you.', sub: 'Free · no account · about a minute', actions: CTA_ACT })

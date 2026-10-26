@@ -40,6 +40,7 @@
       h('div', { className: 'gs-stack' }, h(G.Kicker, null, 'Size L + a short stem'), h(G.Hook, { size: 104 }, 'A stem can’t\n*save it.*')),
       h('div', { style: { marginTop: 80 } }, bars([['L', 78, true]])),
       h('p', { className: 'p17-fact', style: Object.assign(DISP(650, 48, 85), { margin: '40px 0 0', color: INK, lineHeight: 1.25 }) }, 'Even with a 50 mm stem, the bars sit 10 mm too high. Height comes from the frame.'),
+      note('Same rider: 178 cm, inseam 84 cm, typical flexibility, balanced position. From Geomo.'),
       h('div', { style: { flex: 1 } })),
     h(G.Slide, { key: 5, format: 'reel', tone: 'paper', footer: false },
       h('div', { className: 'gs-stack' }, h(G.Kicker, null, 'Before you pay'), h(G.Hook, { size: 112 }, 'Check the size\n*on sale.*'),

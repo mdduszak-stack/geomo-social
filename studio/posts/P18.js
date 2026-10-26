@@ -25,7 +25,8 @@
     })));
   var s2 = h(G.ContentSlide, { key: 2, page: 2, total: 7, kicker: 'Check 1 · Your body', title: 'Know your inseam and how flexible you are.', art: body,
     note: 'Same 178 cm rider: stiff vs flexible moves the ideal handlebar by 58 mm.', artFirst: true });
-  SETS[CODE] = [base[0], clone(s2, { series: 'Black Friday' })].concat(base.slice(2));
+  var s5 = clone(base[4], { note: 'Canyon Grail Gen 2, same rider: 178 cm, inseam 84 cm, typical flexibility, balanced. 95% in M, 54% in L.' });
+  SETS[CODE] = [base[0], clone(s2, { series: 'Black Friday' }), base[2], base[3], s5].concat(base.slice(5));
 
   var byStyle = function (r, s) { return M.qa(r, '[style*="' + s + '"]'); };
   CHOREO[CODE] = [

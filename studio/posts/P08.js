@@ -120,7 +120,7 @@
       h('div', { className: 'gs-stack' }, h(G.Kicker, null, 'Same frame, five stems'), h(G.Hook, { size: 104 }, 'Only the stem\n*changes.*')),
       h('div', { className: 'gs-art', style: { marginTop: 40 } }, cockpit(F.M, 100, 12)),
       h('div', { className: 'p8-ros', style: { position: 'relative', height: 140, minHeight: 140, flexShrink: 0, marginTop: 30 } }, M_STOPS.map(function (s, i) { return readout(s, i, i === M_STOPS.length - 1); })),
-      note('70 mm puts his bars right on target (98%). 100 mm: 63%, the bike feels too long.'),
+      note('Rider: 178 cm, inseam 84 cm, typical flexibility, balanced position. 70 mm: bars right on target (98%). 100 mm: 63%, too long.'),
       h('div', { style: { flex: 1 } })),
     // 4 · between sizes: frames on top of each other, then each one's stem
     h(G.Slide, { key: 4, format: 'reel', tone: 'paper', footer: false },
@@ -129,7 +129,7 @@
       h('div', { className: 'p8-facts', style: { display: 'grid', gap: 10, marginTop: 24 } },
         h('span', { style: Object.assign(DISP(650, 44, 85), { color: INK }) }, 'M is 17 mm taller and 17 mm longer.'),
         h('b', { style: Object.assign(DISP(800, 60, 80), { color: 'var(--ig-good)' }) }, 'S + 90 mm: 98% · M + 70 mm: 98%')),
-      note('S is a bit shorter between the wheels, M a bit calmer. Your call.'),
+      note('Rider: 178 cm, inseam 84 cm, typical flexibility, balanced position. S is a bit shorter between the wheels, M a bit calmer.'),
       h('div', { style: { flex: 1 } })),
     // 5 · too tall: shorter stem, then a steep (−17°) stem
     h(G.Slide, { key: 5, format: 'reel', tone: 'paper', footer: false },
@@ -137,7 +137,7 @@
       h('div', { className: 'gs-art', style: { marginTop: 40 } }, cockpit(F.L, 60, 10, { ang: -17 })),
       h('div', { className: 'p8-ros', style: { position: 'relative', height: 110, minHeight: 110, flexShrink: 0, marginTop: 24 } },
         [{ lab: '80 mm', fit: 61 }, { lab: '50 mm', fit: 78 }, { lab: '60 mm, −17°', fit: 83 }].map(function (x, i) { return readout(x, i, i === 2); })),
-      note('The steep stem brings the bars down to his height, but the L stays long (wheelbase 1085 vs 1062 mm). Size M as sold: 96%.'),
+      note('Rider: 178 cm, inseam 84 cm, typical flexibility, balanced position. The steep stem brings the bars down, but the L stays long (wheelbase 1085 vs 1062 mm). M as sold: 96%.'),
       h('div', { style: { flex: 1 } })),
     // 6 · integrated cockpits
     h(G.Slide, { key: 6, format: 'reel', tone: 'paper', footer: false },
