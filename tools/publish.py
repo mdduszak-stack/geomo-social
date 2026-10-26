@@ -152,6 +152,12 @@ def main():
         if when > now:
             continue
         done = state.setdefault(code, {})
+        # back off after a Meta rate/spam limit (code 368): retrying every 10 min makes the block worse
+        if "368" in done.get("last_error", "") and done.get("last_try"):
+            if (now - datetime.fromisoformat(done["last_try"])).total_seconds() < 3 * 3600:
+                log(f"{code}: waiting after Meta limit (code 368), next try after 3 h")
+                continue
+        done["last_try"] = now.isoformat()
         try:
             if "ig" in post and "ig" not in done:
                 ig = ig or ig_user()
@@ -165,6 +171,7 @@ def main():
                 vid = fb_publish(post)
                 done["fb"] = {"id": vid, "at": datetime.now(timezone.utc).isoformat()}
                 log(f"{code}: Facebook published {vid}")
+            done.pop("last_error", None)
         except Exception as e:
             failed = True
             done["last_error"] = str(e)[:500]
