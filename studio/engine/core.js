@@ -219,7 +219,7 @@ var g3=withSeries('Geometry 101',[
   h(G.ContentSlide,{key:6,page:6,total:8,kicker:'5 · BB drop',title:'More drop = you sit lower between the wheels.',art:h(GroundPair,{a:B.revolt,b:B.seigla,width:936}),note:'BB drop: Revolt 81 mm, Seigla 65 mm. Gravel size M: 65–83 mm.',artFirst:true}),
   h(G.ContentSlide,{key:7,page:7,total:8,kicker:'In Geomo',title:'Fit % first. Then the Target score.',titleBelow:true,
     art:h(G.StatGrid,{items:[{value:'95%',label:'Fit · will you sit comfortably?'},{value:'95',label:'Target · does it ride the way you want?'}]}),
-    note:'Target adds handling: trail, head angle, wheelbase, chainstay, BB drop. Example: Canyon Grail Gen 2 M, 178 cm rider.'}),
+    note:'Target adds handling: trail, head angle, wheelbase, chainstay, BB drop. Example: Canyon Grail Gen 2 M for a rider of 178 cm, inseam 84 cm, typical flexibility, balanced position.'}),
   h(G.CTASlide,{key:8,page:8,total:8,title:'Find a bike that fits and rides your way.',sub:'Free · no account · about a minute',actions:CTA_ACT})
 ]);
 
