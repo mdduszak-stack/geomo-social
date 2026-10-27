@@ -1,6 +1,6 @@
 {
   "P04": {
-    "last_error": "POST 1293087773897815/videos -> HTTP 400: {\"error\":{\"message\":\"Ograniczamy liczb\\u0119 publikowanych post\\u00f3w, dodawanych komentarzy i innych dzia\\u0142a\\u0144 podejmowanych w danym okresie czasu, aby chroni\\u0107 spo\\u0142eczno\\u015b\\u0107 przed spamem. Mo\\u017cesz spr\\u00f3bowa\\u0107 p\\u00f3\\u017aniej. Dowiedz si\\u0119 wi\\u0119cej\",\"type\":\"OAuthException\",\"code\":368,\"error_data\":{\"sentry_block_data\":\"AesZJiiyChfzeUAJW8nzfeu19H4KdOfYC9E3mLq6shKxpGjoNpWHtOPX7D3nz39jpJ1b7rvs60qSzZ_93lV0eS7StVN",
-    "last_try": "2026-10-27T14:39:42.731716+00:00"
+    "last_error": "POST 1293087773897815/videos -> HTTP 400: {\"error\":{\"message\":\"Ograniczamy liczb\\u0119 publikowanych post\\u00f3w, dodawanych komentarzy i innych dzia\\u0142a\\u0144 podejmowanych w danym okresie czasu, aby chroni\\u0107 spo\\u0142eczno\\u015b\\u0107 przed spamem. Mo\\u017cesz spr\\u00f3bowa\\u0107 p\\u00f3\\u017aniej. Dowiedz si\\u0119 wi\\u0119cej\",\"type\":\"OAuthException\",\"code\":368,\"error_data\":{\"sentry_block_data\":\"AeuAjDR1h0koL-qYxSilIvS2NORFBeZ-GNMw3yvrsT2W5bnbLp_bUv5Nf_HI39IbWkaMgZhKZhQYC8UAtme5-fFmhRe",
+    "last_try": "2026-10-27T19:39:15.297229+00:00"
   }
 }
