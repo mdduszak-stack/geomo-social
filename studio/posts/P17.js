@@ -1,5 +1,6 @@
 // ============================================================================
 // P17 v2 · reel · Black Friday: "A discount on the wrong size isn't a deal."
+// Review 28.10 (Maciej, s5): too much empty space → bigger app card with drawn highlights (fit badge, size row, size L).
 // Sources (computed 26.10.2026, Geomo algorithm @ bikefit 91aad78, bikes-backup-2026-10-25T19-12-31-744Z):
 //   Rider 178 cm, inseam 84 cm, typical flexibility, balanced; Canyon Grail CF / CF SLX / CFR (Gen 3, 2027–), Gravel race,
 //   factory stems: S 93%, M 96%, L 61%, XL 0% (calcFitForBike, stock stem). L with a 50 mm stem: 78%, bars 10 mm above target
@@ -43,11 +44,18 @@
       note('Same rider: 178 cm, inseam 84 cm, typical flexibility, balanced position. From Geomo.'),
       h('div', { style: { flex: 1 } })),
     h(G.Slide, { key: 5, format: 'reel', tone: 'paper', footer: false },
-      h('div', { className: 'gs-stack' }, h(G.Kicker, null, 'Before you pay'), h(G.Hook, { size: 112 }, 'Check the size\n*on sale.*'),
-        h('p', { className: 'p17-fact', style: Object.assign(DISP(650, 52, 85), { margin: '40px 0 0', color: INK, lineHeight: 1.25 }) }, 'Your height, inseam and 4 quick questions.\nAbout a minute.')),
-      h('div', { className: 'p17-shots', style: { display: 'grid', justifyItems: 'center', gap: 10, marginTop: 40 } },
-        h('img', { src: 'img/06-karta-roweru.png', style: { width: 560, display: 'block', border: '2px solid var(--s-line)', background: '#fff' } }),
-        h('span', { style: { fontFamily: 'var(--font-display)', fontSize: 26, color: 'var(--s-muted)', textAlign: 'center' } }, 'Geomo bike card: Canyon Grail Gen 2 M for a rider of 178 cm, inseam 84 cm, typical flexibility, balanced.')),
+      h('div', { className: 'gs-stack' }, h(G.Kicker, null, 'Before you pay'), h(G.Hook, { size: 100 }, 'Check the size\n*on sale.*'),
+        h('p', { className: 'p17-fact', style: Object.assign(DISP(650, 44, 85), { margin: '26px 0 0', color: INK, lineHeight: 1.25 }) }, 'Your height, inseam and 4 quick questions.\nAbout a minute.')),
+      h('p', { className: 'gs-caption', style: { fontSize: 24, marginTop: 18 } }, 'Geomo bike card: Canyon Grail Gen 2 for a rider of 178 cm, inseam 84 cm, typical flexibility, balanced position.'),
+      h('div', { className: 'p17-shots', style: { position: 'relative', width: 760, height: 579, marginTop: 20, flexShrink: 0, overflow: 'visible' } },
+        h('div', { className: 'p17-card', style: { position: 'absolute', inset: 0, overflow: 'hidden', border: '2px solid var(--s-line)', background: '#fff', borderRadius: 8 } },
+          h('img', { src: 'img/06-karta-roweru.png', style: { width: 760, display: 'block' } })),
+        h('svg', { className: 'p17-marks', viewBox: '0 0 840 640', width: 760, height: 579, style: { position: 'absolute', inset: 0, overflow: 'visible', fill: 'none', strokeLinecap: 'round' } },
+          h('rect', { x: 667, y: 18, width: 142, height: 106, rx: 14, style: { stroke: 'var(--ig-good)', strokeWidth: 6 } }),
+          h('rect', { x: 34, y: 560, width: 578, height: 58, rx: 10, style: { stroke: 'var(--series-1)', strokeWidth: 5 } }),
+          h('ellipse', { cx: 452, cy: 589, rx: 54, ry: 36, style: { stroke: 'var(--measure-on-dark, #E5484D)', strokeWidth: 7 } })),
+        h('span', { className: 'p17-chip', style: Object.assign(DISP(800, 34, 85), { position: 'absolute', right: 168, top: 40, background: 'var(--ig-good)', color: '#fff', padding: '6px 16px', borderRadius: 8 }) }, 'Your fit →'),
+        h('span', { className: 'p17-chip', style: Object.assign(DISP(800, 34, 85), { position: 'absolute', left: 250, top: 584, background: 'var(--s-fg)', color: 'var(--s-bg)', padding: '6px 16px', borderRadius: 8 }) }, '↑ Every size, scored for you')),
       h('div', { style: { flex: 1 } })),
     h(G.ReelEndCard, { key: 6, line: 'A discount on the wrong size isn’t a deal.', cta: 'Free · link in bio' })
   ];
@@ -58,7 +66,8 @@
     function (r) { M.qa(r, '.p17-strike').forEach(function (x, i) { M.grow(x, 300 + i * 250, 500); }); M.fadeUp(M.q(r, '.p17-no'), 1200, 800); return 3200; },
     function (r) { barsIn(r, 500); M.caption(r, 2400); return 5600; },
     function (r) { barsIn(r, 400); M.fadeUp(M.q(r, '.p17-fact'), 1500, 900); return 5000; },
-    function (r) { M.fadeUp(M.q(r, '.p17-fact'), 900, 900); M.qa(r, '.p17-shots > *').forEach(function (x, i) { M.fadeUp(x, 1500 + i * 500, 900); }); return 4600; },
+    function (r) { M.fadeUp(M.q(r, '.p17-fact'), 700, 900); M.fadeUp(M.q(r, '.p17-card'), 1200, 900); var mk = M.qa(r, '.p17-marks > *'), ch = M.qa(r, '.p17-chip');
+      M.drawPath(mk[0], 2200, 900); M.fadeUp(ch[0], 2700, 700); M.drawPath(mk[1], 3300, 1000); M.drawPath(mk[2], 3900, 800); M.fadeUp(ch[1], 4300, 700); M.caption(r, 4700); return 7000; },
     function (r) { M.qa(r, '.gs-body > *, .gs-stack > *').forEach(function (x, i) { if (i < 6) M.fadeUp(x, 200 + i * 220, 900); }); return 3600; }
   ];
 })();
