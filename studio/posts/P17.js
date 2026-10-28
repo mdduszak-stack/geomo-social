@@ -25,11 +25,11 @@
   SETS[CODE] = [
     h(G.Slide, { key: 1, format: 'reel', tone: 'navy', footer: false },
       h('div', { className: 'gs-stack' }, h(G.Kicker, null, 'Black Friday'),
-        h('div', { style: { display: 'grid', gap: 0 } }, ['−30%', '−40%', '−50%'].map(function (t) { return h('div', { key: t }, big(t, false, 'p17-big', 250)); })),
+        h('div', { style: { display: 'grid', gap: 0 } }, [['−30%', 190], ['−40%', 250], ['−50%', 320]].map(function (t) { return h('div', { key: t[0] }, big(t[0], false, 'p17-big', t[1])); })),
         h('div', { style: { marginTop: 30 } }, h(G.Hook, { size: 104 }, 'Great deal?')))),
     h(G.Slide, { key: 2, format: 'reel', tone: 'navy', footer: false },
       h('div', { className: 'gs-stack' }, h(G.Kicker, null, 'Black Friday'),
-        h('div', { style: { display: 'grid', gap: 0 } }, ['−30%', '−40%', '−50%'].map(function (t) { return h('div', { key: t }, big(t, true, 'p17-big', 250)); })),
+        h('div', { style: { display: 'grid', gap: 0 } }, [['−30%', 190], ['−40%', 250], ['−50%', 320]].map(function (t) { return h('div', { key: t[0] }, big(t[0], true, 'p17-big', t[1])); })),
         h('div', { className: 'p17-no', style: { marginTop: 30 } }, h(G.Hook, { size: 104 }, 'Not if it’s\nthe wrong size.')))),
     h(G.Slide, { key: 3, format: 'reel', tone: 'paper', footer: false },
       h('div', { className: 'gs-stack' }, h(G.Kicker, null, 'Canyon Grail Gen 3 · rider 178 cm'), h(G.Hook, { size: 104 }, 'Only size L\n*left on sale?*')),
@@ -45,6 +45,9 @@
     h(G.Slide, { key: 5, format: 'reel', tone: 'paper', footer: false },
       h('div', { className: 'gs-stack' }, h(G.Kicker, null, 'Before you pay'), h(G.Hook, { size: 112 }, 'Check the size\n*on sale.*'),
         h('p', { className: 'p17-fact', style: Object.assign(DISP(650, 52, 85), { margin: '40px 0 0', color: INK, lineHeight: 1.25 }) }, 'Your height, inseam and 4 quick questions.\nAbout a minute.')),
+      h('div', { className: 'p17-shots', style: { display: 'grid', justifyItems: 'center', gap: 10, marginTop: 40 } },
+        h('img', { src: 'img/06-karta-roweru.png', style: { width: 560, display: 'block', border: '2px solid var(--s-line)', background: '#fff' } }),
+        h('span', { style: { fontFamily: 'var(--font-display)', fontSize: 26, color: 'var(--s-muted)', textAlign: 'center' } }, 'Geomo bike card: Canyon Grail Gen 2 M for a rider of 178 cm, inseam 84 cm, typical flexibility, balanced.')),
       h('div', { style: { flex: 1 } })),
     h(G.ReelEndCard, { key: 6, line: 'A discount on the wrong size isn’t a deal.', cta: 'Free · link in bio' })
   ];
@@ -55,7 +58,7 @@
     function (r) { M.qa(r, '.p17-strike').forEach(function (x, i) { M.grow(x, 300 + i * 250, 500); }); M.fadeUp(M.q(r, '.p17-no'), 1200, 800); return 3200; },
     function (r) { barsIn(r, 500); M.caption(r, 2400); return 5600; },
     function (r) { barsIn(r, 400); M.fadeUp(M.q(r, '.p17-fact'), 1500, 900); return 5000; },
-    function (r) { M.fadeUp(M.q(r, '.p17-fact'), 900, 900); return 3600; },
+    function (r) { M.fadeUp(M.q(r, '.p17-fact'), 900, 900); M.qa(r, '.p17-shots > *').forEach(function (x, i) { M.fadeUp(x, 1500 + i * 500, 900); }); return 4600; },
     function (r) { M.qa(r, '.gs-body > *, .gs-stack > *').forEach(function (x, i) { if (i < 6) M.fadeUp(x, 200 + i * 220, 900); }); return 3600; }
   ];
 })();

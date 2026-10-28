@@ -33,7 +33,9 @@
       h('div', { style: { flex: 1 } })),
     h(G.Slide, { key: 2, format: 'reel', tone: 'paper', footer: false },
       h('div', { className: 'gs-stack' }, h(G.Kicker, null, 'Canyon Grail Gen 3 · rider 178 cm'), h(G.Hook, { size: 104 }, 'S or M?\n*Both work.*')),
-      h('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, marginTop: 80 } },
+      h('div', { className: 'p16-photo', style: { display: 'grid', gap: 6, marginTop: 40 } }, h('img', { src: 'grail3-ride.jpg', style: { width: 936, height: 420, objectFit: 'cover', display: 'block' } }),
+        h('span', { style: { fontFamily: 'var(--font-display)', fontSize: 22, color: MUTED } }, 'Canyon Grail Gen 3 · photo: Canyon')),
+      h('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, marginTop: 40 } },
         card('S', 98, 'with a 90 mm stem', C2), card('M', 98, 'with a 70 mm stem', C1)),
       note('Rider: 178 cm, inseam 84 cm, typical flexibility, balanced position. Same bar position. As sold (80 mm stems): S 93%, M 96%. Fit from Geomo.'),
       h('div', { style: { flex: 1 } })),
@@ -54,7 +56,7 @@
 
   CHOREO[CODE] = [
     function (r) { M.fadeUp(M.q(r, '.p16-sub'), 1200, 900); return 3400; },
-    function (r) { M.qa(r, '.p16-card').forEach(function (c, i) { M.fadeUp(c, 400 + i * 500, 800); M.count(M.q(c, '.p16-fit'), 600 + i * 500, 1100); }); M.caption(r, 2200); return 5600; },
+    function (r) { M.fadeUp(M.q(r, '.p16-photo'), 200, 900); M.qa(r, '.p16-card').forEach(function (c, i) { M.fadeUp(c, 900 + i * 500, 800); M.count(M.q(c, '.p16-fit'), 1100 + i * 500, 1100); }); M.caption(r, 2700); return 6200; },
     function (r) { M.qa(r, '.p16-item').forEach(function (x, i) { M.fadeUp(x, 400 + i * 700, 800); }); return 5400; },
     function (r) { M.qa(r, '.p16-item').forEach(function (x, i) { M.fadeUp(x, 400 + i * 700, 800); }); return 5400; },
     function (r) { M.fadeUp(M.q(r, '.p16-sub'), 900, 900); return 4200; },
