@@ -2,7 +2,7 @@
 // N3 · carousel · "New bike, new numbers": Colnago G5-X vs G3-X (same-stack sizes 510 vs 52)
 // Sources: bikes-backup-2026-10-25T19-12-31-744Z (Geomo database) and Geomo algorithm @ bikefit 91aad78 (26.10.2026;
 //   rider 178 cm, inseam 84 cm, typical flexibility, balanced, factory stems). G5-X 510: 573/392, HTA 71, STA 73.5, trail 73, chainstay 435, BB drop 80, wb 1044 (stem not published: Geomo estimate); G3-X 52: 573/390, HTA 71.5, STA 73.5, chainstay 430, BB drop 70, stem 110 (no trail/wheelbase published). Tyres: G5-X 53 mm, G3-X 42 mm (Colnago specs). Fit 178 cm: G5-X best 540 93% (510 94% with estimated stem), G3-X best 49 97%.
-//   Photo: Colnago G5-X product image supplied by Maciej 28.10, background removed (rembg isnet); cover + slide 2 morph.
+//   Photo: Colnago G5-X product image supplied by Maciej 28.10, cover uses the original dark studio photo (Maciej 28.10); slide 2 morph uses the cut-out (rembg isnet).
 // ============================================================================
 (function () {
   var CODE = 'N3';
@@ -29,7 +29,7 @@
   var legend = h(G.OverlayLegend, { bikes: [NEW, OLD] });
   SETS[CODE] = withSeries('New bike, new numbers', [
     h(G.CoverSlide, { key: 1, total: total, kicker: 'New bike, new numbers', title: 'New Colnago G5-X.\n*What changed?*', sub: 'Vs the G3-X, sizes with the same stack. Swipe →',
-      art: h('div', { className: 'n1-photo', style: { display: 'grid', gap: 8 } }, h('img', { src: 'g5x-product.png', style: { width: 936, display: 'block' } }),
+      art: h('div', { className: 'n1-photo', style: { display: 'grid', gap: 8 } }, h('img', { src: 'g5x-cover.jpg', style: { width: 936, height: 560, objectFit: 'cover', display: 'block', borderRadius: 12 } }),
         h('span', { style: { fontFamily: 'var(--font-display)', fontSize: 22, color: MUTED } }, 'G5-X · photo: Colnago')) }),
     h(G.ContentSlide, { key: 2, page: 2, total: total, kicker: 'At a glance · 510 vs 52', title: 'Same stack. Lower and longer below.',
       art: h('div', { style: { position: 'relative' } }, h(G.BikeDrawing, { bikes: [NEW, OLD], width: 900, showSaddle: false }), legend,
