@@ -140,17 +140,26 @@
     var lab = qa(svg, ':scope > text').pop(); if (lab) fade(lab, t + 1600, 700);
     return t + 3400;
   }
-  // Product photo -> geometry drawing. ax = wheel axles in the photo's natural pixels {rx, fx, cy, w}.
-  // The photo is scaled and placed so its axles sit on the first bike's axles, then fades out while the lines draw.
-  function morph(img, svg, ax, t, dur) {
-    if (!img || !svg) return;
-    var cs = qa(svg, 'circle').filter(function (c) { return +c.getAttribute('r') > 100; }).slice(0, 2); if (cs.length < 2) return;
+  // Product photo -> geometry drawing (standard for every "New bike" post, Maciej 28.10).
+  // <img data-ax='{"rx":..,"fx":..,"cy":..,"w":..}'> = wheel axles in the photo's natural pixels. The photo is scaled and
+  // placed so its axles sit on the first bike's axles in the sibling svg.gd; it starts fully visible, then fades while the
+  // lines draw and stays faintly behind the drawing (REST opacity) — also in the static PNG.
+  var PHOTO_REST = 0.12;
+  function placePhoto(img) {
+    if (!img) return false; var svg = img.parentNode && img.parentNode.querySelector('svg.gd'); if (!svg) return false;
+    var ax = JSON.parse(img.getAttribute('data-ax'));
+    var cs = qa(svg, 'circle').filter(function (c) { return +c.getAttribute('r') > 100; }).slice(0, 2); if (cs.length < 2) return false;
     var host = img.offsetParent, hr = host.getBoundingClientRect(), k = hr.width / host.offsetWidth;
     var ctr = function (c) { var b = c.getBoundingClientRect(); return { x: (b.left + b.width / 2 - hr.left) / k, y: (b.top + b.height / 2 - hr.top) / k }; };
     var a = ctr(cs[0]), b = ctr(cs[1]); if (a.x > b.x) { var tmp = a; a = b; b = tmp; }
     var sc = (b.x - a.x) / (ax.fx - ax.rx);
     img.style.width = (ax.w * sc) + 'px'; img.style.left = (a.x - ax.rx * sc) + 'px'; img.style.top = (a.y - ax.cy * sc) + 'px';
-    add(img, [{ opacity: 1 }, { opacity: 1, offset: 0.35 }, { opacity: 0 }], t, dur || 2600, 'ease');
+    img.style.opacity = PHOTO_REST; return true;
+  }
+  function placePhotos() { qa(document, 'img[data-ax]').forEach(placePhoto); }
+  function morph(img, t, dur) {
+    if (!placePhoto(img)) return;
+    add(img, [{ opacity: 1 }, { opacity: 1, offset: 0.35 }, { opacity: PHOTO_REST }], t, dur || 2600, 'ease');
   }
   function icon(svg, t, dur) { qa(svg, 'path,circle').forEach(function (p) { drawPath(p, t, dur || 1300); }); }
   function ring(root, t) { qa(root, '.gs-pencil path').forEach(function (p) { drawPath(p, t, 1000, 'cubic-bezier(.45,0,.25,1)'); }); }
@@ -383,7 +392,7 @@
     return t2 + 2600;
   };
   window.CHOREO = CHOREO;
-  window.M = { q: q, qa: qa, add: add, fade: fade, fadeUp: fadeUp, grow: grow, drawPath: drawPath, count: count, bike: bike, rider: rider, icon: icon, morph: morph, ring: ring, ctaRows: ctaRows, caption: caption, titleIn: titleIn, cockpit: cockpit };
+  window.M = { q: q, qa: qa, add: add, fade: fade, fadeUp: fadeUp, grow: grow, drawPath: drawPath, count: count, bike: bike, rider: rider, icon: icon, morph: morph, placePhotos: placePhotos, ring: ring, ctaRows: ctaRows, caption: caption, titleIn: titleIn, cockpit: cockpit };
   window.GeomoMotion = {
     setup: function (set, idx) {
       var root = document.querySelector('#s1 > *');

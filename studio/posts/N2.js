@@ -33,7 +33,7 @@
         h('span', { style: { fontFamily: 'var(--font-display)', fontSize: 22, color: MUTED } }, 'Crux 5 · photo: Specialized')) }),
     h(G.ContentSlide, { key: 2, page: 2, total: total, kicker: 'At a glance · size 56', title: 'Same front. New numbers below.',
       art: h('div', { style: { position: 'relative' } }, h(G.BikeDrawing, { bikes: [NEW, OLD], width: 900, showSaddle: false }), legend,
-        h('img', { className: 'n1-prod', src: 'crux5-product.jpg', style: { position: 'absolute', left: 0, top: 0, width: 900, opacity: 0, mixBlendMode: 'multiply', pointerEvents: 'none' } })),
+        h('img', { className: 'n1-prod', 'data-ax': '{"rx":325,"fx":1073,"cy":500,"w":1400}', src: 'crux5-product.jpg', style: { position: 'absolute', left: 0, top: 0, width: 900, opacity: 0.12, mixBlendMode: 'multiply', pointerEvents: 'none' } })),
       note: 'Stack 578 mm in both. The changes are in the details: tyres, bottom bracket, steering. Photo: Specialized.', artFirst: true }),
     h(G.ContentSlide, { key: 3, page: 3, total: total, kicker: '1 · Tyres', title: 'Room for 55 mm tyres.', art: change([['Max tyre (700c)', '47', '55 mm']]), note: 'Biggest change of the generation. From Specialized’s manual and product page.', artFirst: true }),
     h(G.ContentSlide, { key: 4, page: 4, total: total, kicker: '2 · Lower and slacker', title: 'You sit lower in the bike.', art: change([['BB drop', '72', '78 mm'], ['Head angle (56)', '72°', '71.5°'], ['Trail (56)', '64', '66 mm']]), note: '6 mm lower bottom bracket, a touch slacker and more trail: steadier on rough ground.', artFirst: true }),
@@ -46,7 +46,7 @@
   var rowsSlide = function (r) { var e = rowsIn(r, 300); M.caption(r, e); return e + 2600; };
   CHOREO[CODE] = [
     function (r) { M.fadeUp(M.q(r, '.n1-photo'), 300, 1000); return 3800; },
-    function (r) { var sv = M.q(r, 'svg.gd'); M.morph(M.q(r, '.n1-prod'), sv, { rx: 325, fx: 1073, cy: 500, w: 1400 }, 0, 3000); var e = M.bike(sv, 1400); M.fade(M.q(r, '.gs-legend'), e - 600, 700); M.caption(r, e); return e + 2400; },
+    function (r) { var sv = M.q(r, 'svg.gd'); M.morph(M.q(r, '.n1-prod'), 0, 3000); var e = M.bike(sv, 1400); M.fade(M.q(r, '.gs-legend'), e - 600, 700); M.caption(r, e); return e + 2400; },
     rowsSlide, rowsSlide, rowsSlide, rowsSlide,
     function (r) { M.qa(r, '.n1-col').forEach(function (c, i) { Array.prototype.forEach.call(c.children, function (x, j) { M.fadeUp(x, 300 + i * 700 + j * 300, 800); }); }); M.caption(r, 2800); return 6000; },
     function (r) { M.ctaRows(r, 400); return 4600; }

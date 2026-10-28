@@ -57,7 +57,7 @@
         h('span', { style: { fontFamily: 'var(--font-display)', fontSize: 22, color: MUTED } }, 'Photo: Canyon')) }),
     h(G.ContentSlide, { key: 2, page: 2, total: total, kicker: '1 · The front', title: 'The front is 16 mm lower.',
       art: h('div', { style: { position: 'relative' } }, h(G.BikeDrawing, { bikes: [g3, g2], width: 900, showSaddle: false, callouts: [{ at: 'H', from: 0, to: 1, text: '16 mm lower', dx: -60, dy: 100, size: 40 }] }), legend,
-        h('img', { className: 'n1-prod', src: 'grail3-product.jpg', style: { position: 'absolute', left: 0, top: 0, width: 900, opacity: 0, mixBlendMode: 'multiply', pointerEvents: 'none' } })),
+        h('img', { className: 'n1-prod', 'data-ax': '{"rx":266.5,"fx":931.5,"cy":482.5,"w":1200}', src: 'grail3-product.jpg', style: { position: 'absolute', left: 0, top: 0, width: 900, opacity: 0.12, mixBlendMode: 'multiply', pointerEvents: 'none' } })),
       note: 'Stack 591 → 575 mm. Reach stays 411 mm. Same size M, a lower, racier position. Photo: Canyon.', artFirst: true }),
     h(G.ContentSlide, { key: 3, page: 3, total: total, kicker: '2 · Steering', title: 'Quicker steering.',
       art: change([['Trail', '69', '62 mm'], ['Head angle', '71.5°', '71.5°']]),
@@ -78,7 +78,7 @@
   function rowsIn(r, t) { M.qa(r, '.n1-row').forEach(function (x, i) { M.fadeUp(x, t + i * 350, 800); var n = M.q(x, '.n1-new, .n1-fit'); if (n) M.count(n, t + i * 350 + 200, 1000); }); return t + M.qa(r, '.n1-row').length * 350 + 600; }
   CHOREO[CODE] = [
     function (r) { M.fadeUp(M.q(r, '.n1-photo'), 300, 1000); return 3800; },
-    function (r) { var sv = M.q(r, 'svg.gd'); M.morph(M.q(r, '.n1-prod'), sv, { rx: 266.5, fx: 931.5, cy: 482.5, w: 1200 }, 0, 3000); var e = M.bike(sv, 1400); M.fade(M.q(r, '.gs-legend'), e - 600, 700); M.caption(r, e); return e + 2400; },
+    function (r) { var sv = M.q(r, 'svg.gd'); M.morph(M.q(r, '.n1-prod'), 0, 3000); var e = M.bike(sv, 1400); M.fade(M.q(r, '.gs-legend'), e - 600, 700); M.caption(r, e); return e + 2400; },
     function (r) { var e = rowsIn(r, 300); M.caption(r, e); return e + 2600; },
     function (r) { var e = rowsIn(r, 300); M.caption(r, e); return e + 2600; },
     function (r) { var e = rowsIn(r, 300); M.caption(r, e); return e + 2600; },

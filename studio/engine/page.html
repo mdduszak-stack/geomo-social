@@ -16,7 +16,7 @@
     var root=ReactDOM.createRoot(document.getElementById('root'));
     if(idx===null) root.render(h(F,null,set.map(function(s,i){return h('div',{key:i,className:'slot',id:'s'+(i+1)},s);})));
     else { document.body.classList.add('anim'); root.render(h('div',{className:'slot',id:'s1'},set[idx])); }
-    setTimeout(function(){window.__ready=true;},50);
+    setTimeout(function(){ if(window.M&&M.placePhotos) M.placePhotos(); window.__ready=true;},50);
   }
   if(SETS[code]) return render();
   var sc=document.createElement('script'); sc.src='../posts/'+code+'.js'; sc.onload=render; sc.onerror=render; document.head.appendChild(sc);
