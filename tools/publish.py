@@ -79,6 +79,8 @@ def ig_prepare(ig, post):
         if spec.get("audio"):   # licensed track from the Instagram Audio API (ig_audio), mixed over the video
             a = spec["audio"]
             extra["audio_configuration"] = json.dumps({"audio_id": str(a["id"]), "audio_volume": a.get("audio_volume", 60), "video_volume": a.get("video_volume", 100)})
+        if spec.get("cover"):   # static cover image (JPEG) for the profile grid instead of the first video frame
+            extra["cover_url"] = url_for(spec["cover"])
         c = call("POST", f"{ig}/media", media_type="REELS", video_url=media[0], caption=spec["caption"], share_to_feed="true", **extra)["id"]
         wait_ready(c, "reel")
         return c
