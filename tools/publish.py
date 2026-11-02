@@ -136,6 +136,20 @@ def main():
                 f"{x.get('id')}: {x.get('title')} - {x.get('display_artist') or x.get('artist')} ({x.get('duration_in_ms') or x.get('duration')})" for x in items[:25]))
             if items: log("first item fields: " + ",".join(items[0].keys()))
             return
+        if code == "fbtest":   # upload one video to the Page as UNPUBLISHED, report the result, delete it again
+            src = queue["P05"]["fb_api_backup"]["video"]
+            try:
+                r = call("POST", f"{PAGE}/videos", file_url=url_for(src), description="geomo upload test (unpublished)", published="false")
+                vid = r.get("id")
+                log(f"FBTEST OK: video accepted, id {vid} (unpublished) - the upload limit is gone")
+                if vid:
+                    try:
+                        call("DELETE", vid); log(f"FBTEST: test video {vid} deleted")
+                    except Exception as e:
+                        log("FBTEST: could not delete test video:", str(e)[:300])
+            except Exception as e:
+                log("FBTEST BLOCKED:", str(e)[:500])
+            return
         me = call("GET", PAGE, fields="name")
         ig = ig_user()
         log(f"page OK: {me.get('name')} · IG account {ig}")
