@@ -1,0 +1,82 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="/geomo-social/studio/engine/tokens.css">
+<style>
+html,body{margin:0;background:var(--ig-paper)}
+#s{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--ig-paper)}
+canvas{position:absolute;left:0;top:0}
+.o{position:absolute;z-index:2}
+.logo{left:72px;top:96px;font:800 44px var(--font-display);color:var(--ig-ink);letter-spacing:-0.03em}
+.k{left:72px;top:250px;font:700 40px var(--font-display);color:var(--ig-navy)}
+.t{left:72px;top:305px;font:800 96px/0.96 var(--font-display);letter-spacing:-0.025em;color:var(--ig-ink)}
+.t em{font-style:normal;color:var(--series-1)}
+.lab{font:800 46px var(--font-display);color:var(--measure);background:var(--ig-paper);padding:2px 10px;opacity:0;white-space:nowrap}
+.ph{left:0;top:0;width:1080px;height:1920px;overflow:hidden;z-index:1;background:var(--ig-navy)}.ph img{position:absolute;height:1100px;left:50%;top:640px;transform:translateX(-56%)}.ph span{position:absolute;left:72px;top:1760px;font:600 26px var(--font-display);color:var(--ig-on-navy-muted)}
+.hook{left:72px;right:140px;top:250px;z-index:3;font:800 104px/0.95 var(--font-display);letter-spacing:-0.025em;color:#fff}.hook em{font-style:normal;color:#7fe0bd}.hook span{display:block;margin-top:40px;font:700 54px/1.15 var(--font-display);letter-spacing:0}
+.n{left:72px;right:140px;bottom:430px;font:400 36px/1.3 var(--font-serif);color:var(--ig-ink2);opacity:0}
+</style>
+<script type="importmap">{"imports":{"three":"/geomo/node_modules/three/build/three.module.js","three/addons/":"/geomo/node_modules/three/examples/jsm/"}}</script>
+</head><body><div id="s">
+<div class="o ph" id="ph"><img src="grail3-ride2.webp"><span>Canyon Grail Gen 3 · photo: Canyon</span></div>
+<div class="o hook" id="hook">Black Friday deal<br>on a <em>Grail?</em><span>Check two numbers first.</span></div>
+<div class="o logo">Geomo</div>
+<div class="o k" id="kick">Black Friday · know the numbers</div>
+<div class="o t" id="title">Canyon Grail Gen 3.<br><em>Size M.</em></div>
+<div class="o lab" id="lst">Stack 575</div><div class="o lab" id="lre">Reach 411</div>
+<div class="o n" id="note">Two numbers decide where your hands go. Check them for your body before you check the price.</div>
+</div>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { Line2 } from 'three/addons/lines/Line2.js';
+import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
+import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
+import { buildBike, animateBike } from './bike3d.js';
+const W=1080,H=1920, css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const r=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true});
+r.setSize(W,H); r.setPixelRatio(1); r.shadowMap.enabled=true; r.shadowMap.type=THREE.PCFSoftShadowMap;
+r.toneMapping=THREE.ACESFilmicToneMapping; r.toneMappingExposure=1.05; r.outputColorSpace=THREE.SRGBColorSpace;
+document.getElementById('s').appendChild(r.domElement);
+const scene=new THREE.Scene();
+const pm=new THREE.PMREMGenerator(r); scene.environment=pm.fromScene(new RoomEnvironment(),0.04).texture;
+// Canyon Grail CF / CF SLX / CFR (Gen 3) M — Geomo database (bikes-backup-2026-11-10)
+const G={stack:575,reach:411,hta:71.5,sta:73.8,chainstay:435,bbDrop:75,wheelbase:1062,headTube:138,stem:80};
+const bike=buildBike(G,{frameColor:'#c9ced6', accent:css('--series-1')}); scene.add(bike);
+const gy=bike.userData.groundY;
+const ground=new THREE.Mesh(new THREE.PlaneGeometry(8000,8000),new THREE.ShadowMaterial({opacity:0.16})); ground.rotation.x=-Math.PI/2; ground.position.y=gy; ground.receiveShadow=true; scene.add(ground);
+const sun=new THREE.DirectionalLight('#ffffff',2.2); sun.position.set(900,2600,1500); sun.castShadow=true;
+sun.shadow.mapSize.set(2048,2048); Object.assign(sun.shadow.camera,{left:-1500,right:1500,top:1500,bottom:-1500,near:100,far:6000}); sun.shadow.radius=6; scene.add(sun);
+scene.add(new THREE.HemisphereLight('#ffffff','#d9d4c7',0.6));
+const cam=new THREE.PerspectiveCamera(28,W/H,10,40000);
+// dimension lines (side view, end of the clip)
+const red=css('--measure'); const dmat=()=>new LineMaterial({color:red,linewidth:5,transparent:true,opacity:0,resolution:new THREE.Vector2(W,H),depthTest:false});
+const line=(a,b)=>{const g=new LineGeometry(); g.setPositions([...a,...b]); const m=dmat(); const l=new Line2(g,m); l.renderOrder=9; scene.add(l); return m;};
+const zf=0; // lines float on the camera side so they are never hidden by the bike
+const dims=[line([G.reach+150,0,zf],[G.reach+150,G.stack,zf]), line([0,G.stack+130,zf],[G.reach,G.stack+130,zf]),
+  line([-60,0,zf],[G.reach+190,0,zf]), line([G.reach,G.stack-20,zf],[G.reach+190,G.stack-20,zf]), line([0,G.stack+60,zf],[0,G.stack+170,zf]), line([G.reach,G.stack+20,zf],[G.reach,G.stack+170,zf])];
+const ease=x=>x<0?0:x>1?1:x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const target=new THREE.Vector3(105,330,0);
+function camAt(yaw,pitch,dist){cam.position.set(target.x+dist*Math.sin(yaw)*Math.cos(pitch),target.y+dist*Math.sin(pitch),target.z+dist*Math.cos(yaw)*Math.cos(pitch)); cam.lookAt(target);}
+const lerp=(a,b,k)=>a+(b-a)*k, rad=d=>d*Math.PI/180;
+function proj(x,y,z){const p=new THREE.Vector3(x,y,z).project(cam); return [(p.x+1)/2*W,(1-p.y)/2*H];}
+window.renderAt=function(T){ // 12.6 s: 0-3 photo hook, then 3D
+  const t=Math.max(0,T-2.6);
+  animateBike(bike,t,1);
+  const pf=ease((T-2.4)/0.7); const ph=document.getElementById('ph'), hk=document.getElementById('hook');
+  ph.style.opacity=1-pf; ph.querySelector('img').style.transform=`translateX(-56%) scale(${1.0+T*0.025})`; hk.style.opacity=1-pf; document.querySelector('.logo').style.color=pf<0.5?'#fff':''; hk.style.transform=`translateY(${-pf*40}px)`;
+  const hin=ease(T/0.6); hk.querySelector('span').style.opacity=ease((T-0.9)/0.5);
+  // camera keys: front 3/4 high -> side -> rear 3/4 low
+  let yaw,pitch,dist;
+  if(t<4.2){const k=ease(t/4.2); yaw=lerp(rad(62),0,k); pitch=lerp(rad(16),rad(2),k); dist=lerp(6600,7700,k);}
+  else if(t<7){yaw=0;pitch=rad(2);dist=7700;}
+  else {const k=ease((t-7)/3); yaw=lerp(0,rad(-38),k); pitch=lerp(rad(2),rad(22),k); dist=lerp(7700,7200,k);}
+  camAt(yaw,pitch,dist); cam.updateMatrixWorld(); cam.updateProjectionMatrix();
+  const da=Math.min(ease((t-4.4)/0.8), 1-ease((t-6.6)/0.5)); dims.forEach(m=>m.opacity=da);
+  const [sx,sy]=proj(G.reach+150,G.stack/2,zf), [rx,ry]=proj(G.reach/2,G.stack+130,zf);
+  const ls=document.getElementById('lst'), lr=document.getElementById('lre');
+  Object.assign(ls.style,{left:(sx+16)+'px',top:(sy-30)+'px',opacity:da}); Object.assign(lr.style,{left:(rx-120)+'px',top:(ry-76)+'px',opacity:da});
+  document.getElementById('note').style.opacity=ease((t-7.4)/0.8);
+  const tk=ease((T-2.7)/0.8); for(const id of ['kick','title']) {const e=document.getElementById(id); e.style.opacity=tk; e.style.transform=`translateY(${(1-tk)*30}px)`;}
+  r.render(scene,cam);
+};
+await document.fonts.ready; window.renderAt(0); window.__ready=true;
+</script></body></html>
