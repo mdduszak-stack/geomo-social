@@ -136,6 +136,20 @@ def main():
                 f"{x.get('id')}: {x.get('title')} - {x.get('display_artist') or x.get('artist')} ({x.get('duration_in_ms') or x.get('duration')})" for x in items[:25]))
             if items: log("first item fields: " + ",".join(items[0].keys()))
             return
+        if code == "stats":   # read-only: recent Instagram media with basic insights
+            ig = ig_user()
+            ms = call("GET", f"{ig}/media", fields="id,caption,media_type,media_product_type,timestamp,like_count,comments_count,thumbnail_url", limit="25")
+            for m in ms.get("data", []):
+                ins = {}
+                for met in ("views,reach,saved,shares,total_interactions", "reach,saved,shares,total_interactions"):
+                    try:
+                        r = call("GET", f"{m['id']}/insights", metric=met)
+                        ins = {x["name"]: x["values"][0]["value"] for x in r.get("data", [])}; break
+                    except Exception as e:
+                        ins = {"err": str(e)[:80]}
+                cap = (m.get("caption") or "").replace("\n", " ")[:60]
+                log(f"STATS {m['timestamp'][:16]} {m.get('media_product_type')}/{m['media_type']} likes={m.get('like_count')} com={m.get('comments_count')} {ins} | {cap}")
+            return
         if code == "fbtest":   # upload one video to the Page as UNPUBLISHED, report the result, delete it again
             src = queue["P05"]["fb_api_backup"]["video"]
             try:
