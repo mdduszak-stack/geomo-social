@@ -12,7 +12,7 @@ Media URLs are built from repo paths via jsDelivr, pinned to the current commit.
 Usage: publish.py            -> publish what is due
        publish.py --check P05 -> dry run: verify token/ids and prepare IG containers, no publishing
 """
-import json, os, sys, time, urllib.parse, urllib.request, urllib.error
+import json, time, os, sys, time, urllib.parse, urllib.request, urllib.error
 from datetime import datetime, timezone
 
 GV = os.environ.get("GRAPH_VERSION", "v26.0")
@@ -149,6 +149,31 @@ def main():
                         ins = {"err": str(e)[:80]}
                 cap = (m.get("caption") or "").replace("\n", " ")[:60]
                 log(f"STATS {m['timestamp'][:16]} {m.get('media_product_type')}/{m['media_type']} likes={m.get('like_count')} com={m.get('comments_count')} {ins} | {cap}")
+            try:
+                acc = call("GET", ig, fields="followers_count,media_count,username")
+                log(f"STATS ACCOUNT {acc}")
+            except Exception as e:
+                log("STATS ACCOUNT err", str(e)[:120])
+            for met in ("reach,views,profile_views,accounts_engaged,total_interactions,website_clicks", "reach"):
+                try:
+                    r = call("GET", f"{ig}/insights", metric=met, period="day", metric_type="total_value", since=str(int(time.time()) - 28 * 86400), until=str(int(time.time())))
+                    log("STATS IG28 " + str({x["name"]: x.get("total_value", {}).get("value") for x in r.get("data", [])})); break
+                except Exception as e:
+                    log("STATS IG28 err", str(e)[:160])
+            try:
+                fp = call("GET", f"{PAGE}/published_posts", fields="created_time,message,shares,reactions.summary(true).limit(0),comments.summary(true).limit(0)", limit="25")
+                for x in fp.get("data", []):
+                    ins = {}
+                    try:
+                        r = call("GET", f"{x['id']}/insights", metric="post_impressions_unique,post_clicks,post_video_views")
+                        ins = {d["name"]: d["values"][0]["value"] for d in r.get("data", [])}
+                    except Exception as e:
+                        ins = {"err": str(e)[:60]}
+                    log(f"STATS FB {x['created_time'][:16]} react={x.get('reactions',{}).get('summary',{}).get('total_count')} com={x.get('comments',{}).get('summary',{}).get('total_count')} shares={x.get('shares',{}).get('count',0)} {ins} | {(x.get('message') or '')[:50]}")
+                pf = call("GET", PAGE, fields="followers_count,fan_count")
+                log(f"STATS FB PAGE {pf}")
+            except Exception as e:
+                log("STATS FB err", str(e)[:200])
             return
         if code == "fbtest":   # upload one video to the Page as UNPUBLISHED, report the result, delete it again
             src = queue["P05"]["fb_api_backup"]["video"]
