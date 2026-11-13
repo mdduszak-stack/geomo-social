@@ -166,17 +166,17 @@
   },
   "P14": {
     "publish_at": "2026-11-21T09:00:00+01:00",
-    "title": "P14 reel · Black Friday 1/3: parts you can swap (Maciej 12.11: planuj)",
+    "title": "P14 reel · Black Friday 1/3: parts you can swap · Notatnik (Maciej 13.11: P14 OK - podmień)",
     "ig": {
       "type": "reel",
       "media": [
-        "posts/2026-11-21-P14/reel.mp4"
+        "posts/2026-11-21-P14/nb/reel.mp4"
       ],
-      "cover": "posts/2026-11-21-P14/cover.jpg",
+      "cover": "posts/2026-11-21-P14/nb/cover.jpg",
       "caption": "Black Friday is coming. Before you look at discounts, look at this.\n\nTyres, saddle, stem and bar, gearing, wheels: you can swap all of them later.\n\nStack, reach, head angle, wheelbase: those are built into the frame. You live with them for as long as you own the bike.\n\nSpacers, stem length and a steeper (negative) stem can fine-tune the fit. A −17° stem instead of −6° drops the bars about 11 mm. But one size up on a gravel bike is typically 20 mm taller and 9 mm longer.\n\nThe part you can't swap usually costs the most. Check your size before you check the price. Free, no account. Link in bio.\n\n💾 Save it for Black Friday.\n\n#blackfriday #bikefit #bikesizing #gravelbike #newbike"
     },
     "fb": {
-      "video": "posts/2026-11-21-P14/reel.mp4",
+      "video": "posts/2026-11-21-P14/nb/reel.mp4",
       "caption": "Black Friday is coming. Before you look at discounts, look at this.\n\nTyres, saddle, stem and bar, gearing, wheels: you can swap all of them later.\n\nStack, reach, head angle, wheelbase: those are built into the frame. You live with them for as long as you own the bike.\n\nSpacers, stem length and a steeper (negative) stem can fine-tune the fit. A −17° stem instead of −6° drops the bars about 11 mm. But one size up on a gravel bike is typically 20 mm taller and 9 mm longer.\n\nThe part you can't swap usually costs the most. Check your size before you check the price. Free, no account:\nhttps://geomo.app/fbi?utm_source=facebook&utm_medium=social&utm_campaign=fb_p14\n\n💾 Save it for Black Friday.\n\n#blackfriday #bikefit #bikesizing #gravelbike #newbike"
     }
   },
@@ -236,6 +236,22 @@
     "fb": {
       "video": "posts/2026-11-28-P10/fb-video.mp4",
       "caption": "Hi, I'm Maciej, and I built Geomo.\n\nI bought my first gravel bike in 2023. I didn't know yet if I'd race it or take it bikepacking.\n\nThree years later it was time for a race gravel bike. I wasn't just asking how its geometry differed from my old bike. I wanted to know if it suited my body. And I couldn't properly test-ride every bike on my list.\n\nThe numbers in geometry tables didn't tell me much. AI chatbots couldn't interpret them well, and I didn't trust their answers. So over months of searching I built my own fit engine. That was the start of Geomo.\n\nToday there are over 400 bikes in the database, and we keep adding new ones. Geomo is for everyone who wants to choose a bike consciously and knows that geometry matters more than the groupset.\n\nFree, no account:\nhttps://geomo.app/fbi?utm_source=facebook&utm_medium=social&utm_campaign=fb_p10 What should I add next? Tell me 👇\n\n📸 Dominik Stuchlik · Kowal na Kole\n\n#buildinpublic #bikefit #gravelbike #bikegeometry #cycling"
+    }
+  },
+  "P11": {
+    "publish_at": "2026-12-03T19:00:00+01:00",
+    "title": "P11 reel · Stuck between sizes? Comment · Notatnik (Maciej 13.11: zaplanuj P11)",
+    "ig": {
+      "type": "reel",
+      "media": [
+        "posts/2026-12-03-P11/reel.mp4"
+      ],
+      "cover": "posts/2026-12-03-P11/cover.jpg",
+      "caption": "Stuck between two sizes? Let's check it together.\n\nComment with:\n📏 your height\n🦵 your inseam (barefoot, book between your legs, floor to spine)\n🚲 the bike(s) you're considering\n\nWe'll run it through Geomo and reply with the size that fits and why. Prefer privacy? Send us a DM.\n\nExample from the reel: 178 cm, inseam 84 cm, typical flexibility, balanced position. Canyon Grail Gen 2: S 86%, M 95%, L 54%.\n\n#bikesizing #bikefit #gravelbike #whichsize #newbike"
+    },
+    "fb": {
+      "video": "posts/2026-12-03-P11/reel.mp4",
+      "caption": "Stuck between two sizes? Let's check it together.\n\nComment with:\n📏 your height\n🦵 your inseam (barefoot, book between your legs, floor to spine)\n🚲 the bike(s) you're considering\n\nWe'll run it through Geomo and reply with the size that fits and why. Prefer privacy? Send us a message. Or check it yourself: https://geomo.app/fbi?utm_source=facebook&utm_medium=social&utm_campaign=fb_p11\n\nExample from the reel: 178 cm, inseam 84 cm, typical flexibility, balanced position. Canyon Grail Gen 2: S 86%, M 95%, L 54%.\n\n#bikesizing #bikefit #gravelbike #whichsize #newbike"
     }
   }
 }
